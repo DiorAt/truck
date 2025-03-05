@@ -5,50 +5,17 @@ import {
   Typography,
   Grid,
   Paper,
-  Avatar,
   Rating,
   Button,
   Modal,
   TextField,
   Stack,
   Backdrop,
-  IconButton,
   Alert,
 } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
-import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import AddCommentIcon from '@mui/icons-material/AddComment';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { addReview, getApprovedReviews } from '../services/reviewsService';
-
-const MotionTypography = motion(Typography);
-const MotionPaper = motion(Paper);
-const MotionBox = motion(Box);
-
-const reviews = [
-  {
-    name: 'Александр',
-    rating: 5,
-    date: '15.03.2024',
-    text: 'Отличный сервис! Эвакуатор приехал через 15 минут после звонка. Водитель профессионально погрузил машину и быстро доставил в сервис. Очень доволен качеством услуг.',
-    avatar: 'А',
-  },
-  {
-    name: 'Елена',
-    rating: 5,
-    date: '10.03.2024',
-    text: 'Застряла на дороге поздно вечером, позвонила в службу эвакуации. Очень быстро приехали, вежливый водитель все объяснил и помог. Спасибо за оперативность!',
-    avatar: 'Е',
-  },
-  {
-    name: 'Дмитрий',
-    rating: 5,
-    date: '05.03.2024',
-    text: 'Регулярно пользуюсь услугами этой компании для перевозки спецтехники. Всегда все четко, быстро и профессионально. Рекомендую!',
-    avatar: 'Д',
-  },
-];
 
 const Reviews = () => {
   const [open, setOpen] = useState(false);

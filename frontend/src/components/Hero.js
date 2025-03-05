@@ -22,7 +22,7 @@ const MotionPaper = motion(Paper);
 
 const Hero = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box

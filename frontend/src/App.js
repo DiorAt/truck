@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 import AdminLayout from './admin/components/AdminLayout';
 import Dashboard from './admin/pages/Dashboard';
@@ -10,7 +10,7 @@ import ProtectedRoute from './admin/components/ProtectedRoute';
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         {/* Админ панель */}
         <Route path="/admin" element={
@@ -27,7 +27,7 @@ const App = () => {
         {/* Основной сайт */}
         <Route path="/" element={<MainLayout />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
