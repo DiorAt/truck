@@ -63,6 +63,12 @@ const About = () => {
             height: '100%',
             background: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 70%)',
             pointerEvents: 'none',
+            opacity: 0,
+            animation: isLoaded ? 'gradientFade 1s ease-out forwards' : 'none',
+          },
+          '@keyframes gradientFade': {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 },
           },
         }}
       >
@@ -77,6 +83,13 @@ const About = () => {
               background: 'linear-gradient(135deg, #60A5FA, #34D399)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
+              opacity: 0,
+              transform: 'translateY(20px)',
+              animation: isLoaded ? 'titleFade 0.8s ease-out forwards' : 'none',
+              '@keyframes titleFade': {
+                '0%': { opacity: 0, transform: 'translateY(20px)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' },
+              },
             }}
           >
             О нашей компании
@@ -116,6 +129,11 @@ const About = () => {
                     border: '1px solid rgba(255, 255, 255, 0.1)',
                     p: isMobile ? 4 : 5,
                     willChange: 'transform, opacity',
+                    transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5)',
+                    },
                   }}
                 >
                   <MotionBox
