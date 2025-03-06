@@ -4,200 +4,125 @@ import {
   Container,
   Typography,
   Grid,
-  Card,
-  CardContent,
-  Button,
+  Paper,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
-import { motion } from 'framer-motion';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import BuildIcon from '@mui/icons-material/Build';
-import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
-import PhoneIcon from '@mui/icons-material/Phone';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 
-const MotionCard = motion(Card);
-
-const services = [
-  {
-    icon: <LocalShippingIcon sx={{ fontSize: 48 }} />,
-    title: 'Эвакуация авто',
-    price: 'от 1500 ₽',
-    description: 'Быстрая подача эвакуатора в любую точку СПб и области',
-  },
-  {
-    icon: <DirectionsCarIcon sx={{ fontSize: 48 }} />,
-    title: 'Перевозка спецтехники',
-    price: 'от 2500 ₽',
-    description: 'Перевозка строительной и специальной техники',
-  },
-  {
-    icon: <BuildIcon sx={{ fontSize: 48 }} />,
-    title: 'Техпомощь',
-    price: 'от 1000 ₽',
-    description: 'Запуск двигателя, замена колеса, подвоз топлива',
-  },
-  {
-    icon: <TimeToLeaveIcon sx={{ fontSize: 48 }} />,
-    title: 'Аварийные авто',
-    price: 'от 2000 ₽',
-    description: 'Эвакуация аварийных и неисправных автомобилей',
-  },
-];
+const MotionPaper = motion(Paper);
 
 const Services = () => {
-  return (
-    <Box
-      id="services"
-      sx={{
-        py: { xs: 6, md: 8 },
-        backgroundColor: 'background.default',
-      }}
-    >
-      <Container maxWidth="lg">
-        <Typography
-          variant="h2"
-          textAlign="center"
-          gutterBottom
-          sx={{ mb: 6 }}
-        >
-          Наши услуги
-        </Typography>
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const servicesData = JSON.parse(localStorage.getItem('services')) || [];
 
-        <Grid container spacing={3}>
-          {services.map((service, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <MotionCard
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                sx={{
-                  height: '100%',
-                  minHeight: '380px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  background: 'rgba(30, 41, 59, 0.8)',
-                  backdropFilter: 'blur(12px)',
-                  borderRadius: '24px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: '4px',
-                    background: 'linear-gradient(90deg, #3B82F6, #34D399)',
-                    opacity: 0,
-                    transition: 'opacity 0.3s ease',
-                  },
-                  '&:hover': {
-                    transform: 'translateY(-8px)',
-                    '&::before': {
-                      opacity: 1,
-                    },
-                  },
-                }}
-              >
-                <CardContent 
-                  sx={{ 
-                    flexGrow: 1, 
-                    textAlign: 'center',
+  return (
+    <LazyMotion features={domAnimation}>
+      <Box
+        id="services"
+        sx={{
+          py: 8,
+          background: '#0A1929',
+          position: 'relative',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '100%',
+            background: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 70%)',
+            pointerEvents: 'none',
+          },
+        }}
+      >
+        <Container maxWidth="lg">
+          <Typography
+            variant="h2"
+            align="center"
+            gutterBottom
+            sx={{
+              mb: 6,
+              color: '#fff',
+              background: 'linear-gradient(135deg, #60A5FA, #34D399)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            Наши услуги
+          </Typography>
+
+          <Grid container spacing={3}>
+            {servicesData.map((service, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <MotionPaper
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }}
+                  sx={{
+                    height: '100%',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    p: 3,
                     display: 'flex',
                     flexDirection: 'column',
-                    p: 4,
+                    position: 'relative',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    willChange: 'transform, opacity',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      transition: 'transform 0.3s ease-in-out',
+                      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+                    },
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: 'inline-flex',
-                      p: 2,
-                      borderRadius: '50%',
-                      background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
-                      color: 'white',
-                      mb: 3,
-                      mx: 'auto',
-                      transform: 'rotate(0deg)',
-                      transition: 'transform 0.3s ease',
-                      '&:hover': {
-                        transform: 'rotate(360deg)',
-                      },
-                    }}
-                  >
-                    {service.icon}
-                  </Box>
                   <Typography
                     variant="h5"
-                    component="h3"
                     gutterBottom
-                    fontWeight={600}
-                    sx={{ color: '#fff' }}
-                  >
-                    {service.title}
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    gutterBottom
-                    fontWeight={700}
                     sx={{
-                      background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
+                      color: '#fff',
+                      fontWeight: 600,
                       mb: 2,
                     }}
                   >
-                    {service.price}
+                    {service.title}
                   </Typography>
+
                   <Typography
-                    variant="body1"
-                    sx={{ 
-                      color: 'text.secondary',
-                      mb: 'auto',
-                      flexGrow: 1,
+                    sx={{
+                      color: '#94A3B8',
+                      mb: 2,
+                      flex: 1,
                     }}
                   >
                     {service.description}
                   </Typography>
-                  <Box 
-                    sx={{ 
-                      mt: 3,
-                      background: 'linear-gradient(0deg, rgba(15, 23, 42, 0.5) 0%, transparent 100%)',
-                      mx: -4,
-                      mb: -4,
-                      px: 4,
-                      pb: 4,
-                      pt: 2,
+
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      color: '#60A5FA',
+                      fontWeight: 'bold',
+                      mt: 'auto',
                     }}
                   >
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      href="tel:+78121234567"
-                      startIcon={<PhoneIcon />}
-                      sx={{
-                        py: 1.5,
-                        background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
-                        fontSize: '1.1rem',
-                        fontWeight: 600,
-                        textTransform: 'none',
-                        '&:hover': {
-                          background: 'linear-gradient(135deg, #60A5FA, #3B82F6)',
-                          transform: 'translateY(-2px)',
-                          boxShadow: '0 8px 25px rgba(59, 130, 246, 0.4)',
-                        },
-                      }}
-                    >
-                      Заказать
-                    </Button>
-                  </Box>
-                </CardContent>
-              </MotionCard>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </Box>
+                    {service.price} ₽
+                  </Typography>
+                </MotionPaper>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+    </LazyMotion>
   );
 };
 
