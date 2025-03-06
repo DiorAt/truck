@@ -6,7 +6,7 @@ import {
   Grid,
   Paper,
 } from '@mui/material';
-import { motion, LazyMotion, domAnimation, m } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import BuildIcon from '@mui/icons-material/Build';
