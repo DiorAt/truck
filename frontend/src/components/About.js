@@ -24,7 +24,7 @@ const stats = [
   },
   {
     icon: <GroupsIcon sx={{ fontSize: 48 }} />,
-    value: '10 000+',
+    value: '1000+',
     label: 'Довольных клиентов',
   },
   {
