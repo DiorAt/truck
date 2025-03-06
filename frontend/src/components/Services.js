@@ -7,14 +7,45 @@ import {
   Paper,
 } from '@mui/material';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import BuildIcon from '@mui/icons-material/Build';
+import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 
 const MotionPaper = motion(Paper);
 
+const defaultServices = [
+  {
+    icon: <LocalShippingIcon sx={{ fontSize: 48 }} />,
+    title: 'Эвакуация авто',
+    price: 'от 1500',
+    description: 'Быстрая подача эвакуатора в любую точку СПб и области',
+  },
+  {
+    icon: <DirectionsCarIcon sx={{ fontSize: 48 }} />,
+    title: 'Перевозка спецтехники',
+    price: 'от 2500',
+    description: 'Перевозка строительной и специальной техники',
+  },
+  {
+    icon: <BuildIcon sx={{ fontSize: 48 }} />,
+    title: 'Техпомощь',
+    price: 'от 1000',
+    description: 'Запуск двигателя, замена колеса, подвоз топлива',
+  },
+  {
+    icon: <TimeToLeaveIcon sx={{ fontSize: 48 }} />,
+    title: 'Аварийные авто',
+    price: 'от 2000',
+    description: 'Эвакуация аварийных и неисправных автомобилей',
+  },
+];
+
 const Services = () => {
-  const servicesData = JSON.parse(localStorage.getItem('services')) || [];
+  const servicesData = JSON.parse(localStorage.getItem('services')) || defaultServices;
 
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={domAnimation} strict>
       <Box
         id="services"
         sx={{
@@ -53,13 +84,20 @@ const Services = () => {
             {servicesData.map((service, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <MotionPaper
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                    ease: "easeOut"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: 0.4,
+                        delay: index * 0.1,
+                        ease: [0.25, 0.1, 0.25, 1],
+                      },
+                    },
                   }}
                   sx={{
                     height: '100%',
@@ -80,6 +118,20 @@ const Services = () => {
                     },
                   }}
                 >
+                  <Box
+                    sx={{
+                      display: 'inline-flex',
+                      p: 2,
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
+                      color: 'white',
+                      mb: 3,
+                      mx: 'auto',
+                    }}
+                  >
+                    {service.icon}
+                  </Box>
+
                   <Typography
                     variant="h5"
                     gutterBottom
@@ -87,6 +139,7 @@ const Services = () => {
                       color: '#fff',
                       fontWeight: 600,
                       mb: 2,
+                      textAlign: 'center',
                     }}
                   >
                     {service.title}
@@ -97,6 +150,7 @@ const Services = () => {
                       color: '#94A3B8',
                       mb: 2,
                       flex: 1,
+                      textAlign: 'center',
                     }}
                   >
                     {service.description}
@@ -108,6 +162,7 @@ const Services = () => {
                       color: '#60A5FA',
                       fontWeight: 'bold',
                       mt: 'auto',
+                      textAlign: 'center',
                     }}
                   >
                     {service.price} ₽
