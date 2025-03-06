@@ -6,10 +6,11 @@ import {
   Grid,
   Paper,
 } from '@mui/material';
-import { motion, LazyMotion, domAnimation } from 'framer-motion';
+import { motion, LazyMotion, domAnimation, m } from 'framer-motion';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import BuildIcon from '@mui/icons-material/Build';
+import { useAnimation } from '../context/AnimationContext';
 
 const MotionPaper = motion(Paper);
 
@@ -36,6 +37,7 @@ const defaultServices = [
 
 const Services = () => {
   const servicesData = JSON.parse(localStorage.getItem('services')) || defaultServices;
+  const { isLoaded } = useAnimation();
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -45,6 +47,12 @@ const Services = () => {
           py: 8,
           background: '#0A1929',
           position: 'relative',
+          opacity: 0,
+          animation: isLoaded ? 'fadeIn 0.5s ease-out forwards' : 'none',
+          '@keyframes fadeIn': {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 },
+          },
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -77,9 +85,8 @@ const Services = () => {
             {servicesData.map((service, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <MotionPaper
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
+                  initial={false}
+                  animate={isLoaded ? "visible" : "hidden"}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: {

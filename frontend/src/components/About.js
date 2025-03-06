@@ -12,6 +12,7 @@ import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import GroupsIcon from '@mui/icons-material/Groups';
+import { useAnimation } from '../context/AnimationContext';
 
 const MotionBox = motion(Box);
 const MotionPaper = motion(Paper);
@@ -37,6 +38,7 @@ const stats = [
 const About = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isLoaded } = useAnimation();
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -46,6 +48,12 @@ const About = () => {
           py: 8,
           position: 'relative',
           background: '#0A1929',
+          opacity: 0,
+          animation: isLoaded ? 'fadeIn 0.5s ease-out forwards' : 'none',
+          '@keyframes fadeIn': {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 },
+          },
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -78,9 +86,8 @@ const About = () => {
             {stats.map((stat, index) => (
               <Grid item xs={12} sm={4} key={index}>
                 <MotionPaper
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
+                  initial={false}
+                  animate={isLoaded ? "visible" : "hidden"}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
                     visible: {
@@ -112,10 +119,10 @@ const About = () => {
                   }}
                 >
                   <MotionBox
-                    initial={{ scale: 0.9 }}
-                    animate={{
+                    initial={false}
+                    animate={isLoaded ? {
                       scale: [0.9, 1, 0.9],
-                    }}
+                    } : { scale: 0.9 }}
                     transition={{
                       duration: 4,
                       repeat: Infinity,
