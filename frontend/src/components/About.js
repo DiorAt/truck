@@ -94,8 +94,8 @@ const About = () => {
                     },
                   }}
                   sx={{
-                    height: isMobile ? 'auto' : '280px',
-                    minHeight: isMobile ? '200px' : 'auto',
+                    height: isMobile ? 'auto' : '320px',
+                    minHeight: isMobile ? '240px' : 'auto',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -107,7 +107,7 @@ const About = () => {
                     overflow: 'hidden',
                     boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)',
                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                    p: isMobile ? 3 : 4,
+                    p: isMobile ? 4 : 5,
                     willChange: 'transform, opacity',
                   }}
                 >
@@ -123,10 +123,10 @@ const About = () => {
                       times: [0, 0.5, 1],
                     }}
                     sx={{
-                      width: isMobile ? '80px' : '120px',
-                      height: isMobile ? '80px' : '120px',
+                      width: isMobile ? '100px' : '140px',
+                      height: isMobile ? '100px' : '140px',
                       background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                      borderRadius: '16px',
+                      borderRadius: '20px',
                       m: isMobile ? '20px auto' : '30px auto',
                       display: 'flex',
                       alignItems: 'center',
@@ -139,7 +139,7 @@ const About = () => {
                       variant="h3"
                       sx={{
                         color: '#fff',
-                        fontSize: isMobile ? '2rem' : '2.5rem',
+                        fontSize: isMobile ? '2.2rem' : '2.8rem',
                         fontWeight: 'bold',
                         textShadow: '0 2px 10px rgba(0,0,0,0.3)',
                       }}
@@ -151,14 +151,14 @@ const About = () => {
                   <Typography
                     variant="h6"
                     sx={{
-                      fontSize: isMobile ? '1.1rem' : '1.25rem',
+                      fontSize: isMobile ? '1.2rem' : '1.4rem',
                       fontWeight: 600,
                       color: '#fff',
                       textAlign: 'center',
                       textTransform: 'uppercase',
                       letterSpacing: '1px',
-                      mt: 2,
-                      px: 3,
+                      mt: 3,
+                      px: 2,
                       textShadow: '0 2px 4px rgba(0,0,0,0.3)',
                     }}
                   >
