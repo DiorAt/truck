@@ -14,7 +14,6 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import GroupsIcon from '@mui/icons-material/Groups';
 
 const MotionBox = motion(Box);
-const MotionTypography = motion(Typography);
 const MotionPaper = motion(Paper);
 
 const stats = [
