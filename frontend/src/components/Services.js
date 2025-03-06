@@ -5,16 +5,12 @@ import {
   Typography,
   Grid,
   Paper,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import { motion, LazyMotion, domAnimation } from 'framer-motion';
 
 const MotionPaper = motion(Paper);
 
 const Services = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const servicesData = JSON.parse(localStorage.getItem('services')) || [];
 
   return (

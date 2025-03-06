@@ -12,7 +12,6 @@ import {
   Stack,
   Backdrop,
   Alert,
-  useTheme,
 } from '@mui/material';
 import { motion, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import AddCommentIcon from '@mui/icons-material/AddComment';
@@ -21,7 +20,6 @@ import { addReview, getApprovedReviews } from '../services/reviewsService';
 const MotionPaper = motion(Paper);
 
 const Reviews = () => {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
