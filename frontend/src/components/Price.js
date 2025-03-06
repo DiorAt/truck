@@ -6,12 +6,16 @@ import {
   Grid,
   Paper,
   Button,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { getServices } from '../services/siteDataService';
 
 const Price = () => {
   const [services, setServices] = useState([]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     // Загружаем услуги из localStorage
@@ -55,7 +59,7 @@ const Price = () => {
           {services.map((service) => (
             <Grid item xs={12} md={4} key={service.id}>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
@@ -69,7 +73,7 @@ const Price = () => {
                     position: 'relative',
                     overflow: 'hidden',
                     '&:hover': {
-                      transform: 'translateY(-8px)',
+                      transform: isMobile ? 'none' : 'translateY(-8px)',
                       '& .price-tag': {
                         transform: 'translateY(0)',
                         opacity: 1,
@@ -97,8 +101,8 @@ const Price = () => {
                       fontWeight: 'bold',
                       color: '#60A5FA',
                       mb: 2,
-                      transform: 'translateY(20px)',
-                      opacity: 0,
+                      transform: isMobile ? 'none' : 'translateY(20px)',
+                      opacity: isMobile ? 1 : 0,
                       transition: 'all 0.3s ease',
                     }}
                   >

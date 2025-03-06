@@ -5,6 +5,8 @@ import {
   Typography,
   Grid,
   Paper,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -34,166 +36,133 @@ const stats = [
 ];
 
 const About = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box
       id="about"
       sx={{
-        py: { xs: 8, md: 12 },
+        py: 8,
         position: 'relative',
-        overflow: 'hidden',
         '&::before': {
           content: '""',
           position: 'absolute',
           top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
-          background: 'radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.15), transparent 70%)',
+          height: '100%',
+          background: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 70%)',
           pointerEvents: 'none',
         },
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={6} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <MotionBox
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <MotionTypography
-                variant="h2"
+        <Typography
+          variant="h2"
+          align="center"
+          gutterBottom
+          sx={{
+            mb: 6,
+            background: 'linear-gradient(135deg, #60A5FA, #34D399)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          О нашей компании
+        </Typography>
+
+        <Grid container spacing={3}>
+          {stats.map((stat, index) => (
+            <Grid item xs={12} sm={4} key={index}>
+              <MotionPaper
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
                 sx={{
-                  mb: 4,
-                  background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
+                  height: isMobile ? 'auto' : '280px',
+                  minHeight: isMobile ? '200px' : 'auto',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  background: '#0A1929',
+                  borderRadius: '24px',
+                  overflow: 'hidden',
+                  boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)',
+                  p: isMobile ? 3 : 4,
                 }}
               >
-                О нашей компании
-              </MotionTypography>
-
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                sx={{
-                  mb: 4,
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                }}
-              >
-                Мы - профессиональная служба эвакуации автомобилей в Санкт-Петербурге, 
-                работающая на рынке более 5 лет. Наша команда состоит из опытных 
-                специалистов, готовых прийти на помощь в любое время суток.
-              </Typography>
-
-              <Typography
-                variant="body1"
-                color="text.secondary"
-                sx={{
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                }}
-              >
-                Мы гордимся тем, что предоставляем быстрый и надежный сервис, 
-                используя современное оборудование и профессиональный подход к 
-                каждому клиенту. Наша цель - обеспечить безопасную и своевременную 
-                эвакуацию вашего автомобиля.
-              </Typography>
-            </MotionBox>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={3} sx={{ height: '100%' }}>
-              {stats.map((stat, index) => (
-                <Grid item xs={4} key={index} sx={{ height: '100%' }}>
-                  <MotionPaper
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                {/* Декоративный элемент в углу */}
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: '-20px',
+                    right: '-20px',
+                    width: '100px',
+                    height: '100px',
+                    background: 'linear-gradient(135deg, #60A5FA, #34D399)',
+                    opacity: 0.1,
+                    transform: 'rotate(45deg)',
+                  }}
+                />
+                
+                {/* Градиентный квадрат */}
+                <MotionBox
+                  initial={{ rotate: -10, scale: 0.9 }}
+                  animate={{
+                    rotate: [0, -10, 0],
+                    scale: [0.9, 1, 0.9],
+                    transition: {
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }
+                  }}
+                  sx={{
+                    width: isMobile ? '80px' : '120px',
+                    height: isMobile ? '80px' : '120px',
+                    background: 'linear-gradient(135deg, #60A5FA, #34D399)',
+                    borderRadius: '12px',
+                    m: isMobile ? '20px auto' : '30px auto',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 8px 20px rgba(96, 165, 250, 0.3)',
+                  }}
+                >
+                  <Box
                     sx={{
-                      height: '280px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      position: 'relative',
-                      background: '#0A1929',
-                      borderRadius: '24px',
-                      overflow: 'hidden',
-                      boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)',
+                      color: '#fff',
+                      fontSize: isMobile ? '2rem' : '2.5rem',
+                      fontWeight: 'bold',
+                      textShadow: '0 2px 10px rgba(0,0,0,0.3)',
                     }}
                   >
-                    {/* Декоративный элемент в углу */}
-                    <Box
-                      sx={{
-                        position: 'absolute',
-                        top: '-20px',
-                        right: '-20px',
-                        width: '100px',
-                        height: '100px',
-                        background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                        opacity: 0.1,
-                        transform: 'rotate(45deg)',
-                      }}
-                    />
-                    
-                    {/* Градиентный квадрат */}
-                    <MotionBox
-                      initial={{ rotate: -10, scale: 0.9 }}
-                      animate={{
-                        rotate: [0, -10, 0],
-                        scale: [0.9, 1, 0.9],
-                        transition: {
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }
-                      }}
-                      sx={{
-                        width: '120px',
-                        height: '120px',
-                        background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                        borderRadius: '12px',
-                        m: '30px auto',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: '0 8px 20px rgba(96, 165, 250, 0.3)',
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          color: '#fff',
-                          fontSize: '2.5rem',
-                          fontWeight: 'bold',
-                          textShadow: '0 2px 10px rgba(0,0,0,0.3)',
-                        }}
-                      >
-                        {stat.value}
-                      </Box>
-                    </MotionBox>
+                    {stat.value}
+                  </Box>
+                </MotionBox>
 
-                    {/* Текст */}
-                    <Typography
-                      sx={{
-                        fontSize: '1.25rem',
-                        fontWeight: 600,
-                        color: '#94A3B8',
-                        textAlign: 'center',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        mt: 2,
-                        px: 3,
-                      }}
-                    >
-                      {stat.label}
-                    </Typography>
-                  </MotionPaper>
-                </Grid>
-              ))}
+                {/* Текст */}
+                <Typography
+                  sx={{
+                    fontSize: isMobile ? '1rem' : '1.25rem',
+                    fontWeight: 600,
+                    color: '#94A3B8',
+                    textAlign: 'center',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    mt: 2,
+                    px: 3,
+                  }}
+                >
+                  {stat.label}
+                </Typography>
+              </MotionPaper>
             </Grid>
-          </Grid>
+          ))}
         </Grid>
       </Container>
     </Box>
