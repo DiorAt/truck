@@ -10,7 +10,6 @@ import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import BuildIcon from '@mui/icons-material/Build';
-import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 
 const MotionPaper = motion(Paper);
 
@@ -32,12 +31,6 @@ const defaultServices = [
     title: 'Техпомощь',
     price: 'от 1000',
     description: 'Запуск двигателя, замена колеса, подвоз топлива',
-  },
-  {
-    icon: <TimeToLeaveIcon sx={{ fontSize: 48 }} />,
-    title: 'Аварийные авто',
-    price: 'от 2000',
-    description: 'Эвакуация аварийных и неисправных автомобилей',
   },
 ];
 
