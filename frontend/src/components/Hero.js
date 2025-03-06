@@ -100,6 +100,7 @@ const Hero = () => {
                     background: 'linear-gradient(135deg, #60A5FA, #34D399)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
+                    fontSize: isMobile ? '2.5rem' : '3.5rem',
                   }}
                 >
                   Эвакуатор 24/7
