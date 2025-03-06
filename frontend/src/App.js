@@ -6,7 +6,7 @@ import Dashboard from './admin/pages/Dashboard';
 import ReviewsManagement from './admin/pages/ReviewsManagement';
 import ServicesManagement from './admin/pages/ServicesManagement';
 import Login from './admin/pages/Login';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './admin/components/ProtectedRoute';
 import { AnimationProvider } from './context/AnimationContext';
 
 function App() {
