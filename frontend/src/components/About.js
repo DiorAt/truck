@@ -17,6 +17,31 @@ import { useAnimation } from '../context/AnimationContext';
 const MotionBox = motion(Box);
 const MotionPaper = motion(Paper);
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
+    }
+  }
+};
+
 const stats = [
   {
     icon: <EmojiEventsIcon sx={{ fontSize: 48 }} />,
@@ -43,11 +68,13 @@ const About = () => {
   return (
     <LazyMotion features={domAnimation} strict>
       <Box
+        component="section"
         id="about"
         sx={{
           py: 8,
           position: 'relative',
           background: '#0A1929',
+          visibility: isLoaded ? 'visible' : 'hidden',
           opacity: 0,
           animation: isLoaded ? 'fadeIn 0.5s ease-out forwards' : 'none',
           '@keyframes fadeIn': {
@@ -73,126 +100,119 @@ const About = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            align="center"
-            gutterBottom
-            sx={{
-              mb: 6,
-              color: '#fff',
-              background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              opacity: 0,
-              transform: 'translateY(20px)',
-              animation: isLoaded ? 'titleFade 0.8s ease-out forwards' : 'none',
-              '@keyframes titleFade': {
-                '0%': { opacity: 0, transform: 'translateY(20px)' },
-                '100%': { opacity: 1, transform: 'translateY(0)' },
-              },
-            }}
+          <MotionBox
+            variants={containerVariants}
+            initial="hidden"
+            animate={isLoaded ? "visible" : "hidden"}
           >
-            О нашей компании
-          </Typography>
+            <Typography
+              variant="h2"
+              align="center"
+              gutterBottom
+              sx={{
+                mb: 6,
+                color: '#fff',
+                background: 'linear-gradient(135deg, #60A5FA, #34D399)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                willChange: 'transform',
+              }}
+            >
+              О нашей компании
+            </Typography>
 
-          <Grid container spacing={4}>
-            {stats.map((stat, index) => (
-              <Grid item xs={12} sm={4} key={index}>
-                <MotionPaper
-                  initial={false}
-                  animate={isLoaded ? "visible" : "hidden"}
-                  variants={{
-                    hidden: { opacity: 0, y: 20 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: {
-                        duration: 0.4,
-                        delay: index * 0.1,
-                        ease: [0.25, 0.1, 0.25, 1],
-                      },
-                    },
-                  }}
-                  sx={{
-                    height: isMobile ? 'auto' : '320px',
-                    minHeight: isMobile ? '240px' : 'auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    position: 'relative',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    backdropFilter: 'blur(10px)',
-                    borderRadius: '24px',
-                    overflow: 'hidden',
-                    boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    p: isMobile ? 4 : 5,
-                    willChange: 'transform, opacity',
-                    transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-                    '&:hover': {
-                      transform: 'translateY(-5px)',
-                      boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5)',
-                    },
-                  }}
-                >
-                  <MotionBox
-                    initial={false}
-                    animate={isLoaded ? {
-                      scale: [0.9, 1, 0.9],
-                    } : { scale: 0.9 }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      times: [0, 0.5, 1],
-                    }}
+            <Grid container spacing={4}>
+              {stats.map((stat, index) => (
+                <Grid item xs={12} sm={4} key={index}>
+                  <MotionPaper
+                    variants={itemVariants}
                     sx={{
-                      width: isMobile ? '100px' : '140px',
-                      height: isMobile ? '100px' : '140px',
-                      background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                      borderRadius: '20px',
-                      m: isMobile ? '20px auto' : '30px auto',
+                      height: isMobile ? 'auto' : '320px',
+                      minHeight: isMobile ? '240px' : 'auto',
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 8px 20px rgba(96, 165, 250, 0.3)',
-                      willChange: 'transform',
+                      position: 'relative',
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      backdropFilter: 'blur(10px)',
+                      borderRadius: '24px',
+                      overflow: 'hidden',
+                      boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      p: isMobile ? 4 : 5,
+                      willChange: 'transform, opacity',
+                      transform: 'translateZ(0)',
+                      backfaceVisibility: 'hidden',
+                      transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+                      '&:hover': {
+                        transform: 'translateY(-5px) translateZ(0)',
+                        boxShadow: '0 15px 40px rgba(0, 0, 0, 0.5)',
+                      },
                     }}
                   >
-                    <Typography
-                      variant="h3"
+                    <MotionBox
+                      initial={false}
+                      animate={isLoaded ? {
+                        scale: [0.9, 1, 0.9],
+                      } : { scale: 0.9 }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        times: [0, 0.5, 1],
+                      }}
                       sx={{
-                        color: '#fff',
-                        fontSize: isMobile ? '2.2rem' : '2.8rem',
-                        fontWeight: 'bold',
-                        textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                        width: isMobile ? '100px' : '140px',
+                        height: isMobile ? '100px' : '140px',
+                        background: 'linear-gradient(135deg, #60A5FA, #34D399)',
+                        borderRadius: '20px',
+                        m: isMobile ? '20px auto' : '30px auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 8px 20px rgba(96, 165, 250, 0.3)',
+                        willChange: 'transform',
+                        transform: 'translateZ(0)',
+                        backfaceVisibility: 'hidden',
                       }}
                     >
-                      {stat.value}
-                    </Typography>
-                  </MotionBox>
+                      <Typography
+                        variant="h3"
+                        sx={{
+                          color: '#fff',
+                          fontSize: isMobile ? '2.2rem' : '2.8rem',
+                          fontWeight: 'bold',
+                          textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                          willChange: 'transform',
+                        }}
+                      >
+                        {stat.value}
+                      </Typography>
+                    </MotionBox>
 
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontSize: isMobile ? '1.2rem' : '1.4rem',
-                      fontWeight: 600,
-                      color: '#fff',
-                      textAlign: 'center',
-                      textTransform: 'uppercase',
-                      letterSpacing: '1px',
-                      mt: 3,
-                      px: 2,
-                      textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                    }}
-                  >
-                    {stat.label}
-                  </Typography>
-                </MotionPaper>
-              </Grid>
-            ))}
-          </Grid>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontSize: isMobile ? '1.2rem' : '1.4rem',
+                        fontWeight: 600,
+                        color: '#fff',
+                        textAlign: 'center',
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        mt: 3,
+                        px: 2,
+                        textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                        willChange: 'transform',
+                      }}
+                    >
+                      {stat.label}
+                    </Typography>
+                  </MotionPaper>
+                </Grid>
+              ))}
+            </Grid>
+          </MotionBox>
         </Container>
       </Box>
     </LazyMotion>
