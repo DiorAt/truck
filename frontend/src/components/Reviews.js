@@ -84,12 +84,13 @@ const Reviews = () => {
   };
 
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={domAnimation} strict>
       <Box
         id="reviews"
         sx={{
           py: 8,
           position: 'relative',
+          background: '#0A1929',
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -109,6 +110,7 @@ const Reviews = () => {
             gutterBottom
             sx={{
               mb: 6,
+              color: '#fff',
               background: 'linear-gradient(135deg, #60A5FA, #34D399)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -140,16 +142,23 @@ const Reviews = () => {
             <Grid item xs={12}>
               <Stack spacing={2}>
                 {reviews.length > 0 ? (
-                  reviews.map((review) => (
+                  reviews.map((review, index) => (
                     <MotionPaper
                       key={review.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{
-                        duration: 0.4,
-                        delay: 0.1,
-                        ease: "easeOut"
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.3 }}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            duration: 0.4,
+                            delay: index * 0.1,
+                            ease: [0.25, 0.1, 0.25, 1],
+                          },
+                        },
                       }}
                       sx={{
                         p: 3,
@@ -175,14 +184,14 @@ const Reviews = () => {
                           },
                         }} 
                       />
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                      <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)', mb: 1 }}>
                         {review.date}
                       </Typography>
                       <Typography sx={{ color: '#fff' }}>{review.text}</Typography>
                     </MotionPaper>
                   ))
                 ) : (
-                  <Typography color="text.secondary" align="center">
+                  <Typography sx={{ color: 'rgba(255, 255, 255, 0.7)', textAlign: 'center' }}>
                     Пока нет отзывов. Будьте первым!
                   </Typography>
                 )}

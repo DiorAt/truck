@@ -39,12 +39,13 @@ const About = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={domAnimation} strict>
       <Box
         id="about"
         sx={{
           py: 8,
           position: 'relative',
+          background: '#0A1929',
           '&::before': {
             content: '""',
             position: 'absolute',
@@ -64,6 +65,7 @@ const About = () => {
             gutterBottom
             sx={{
               mb: 6,
+              color: '#fff',
               background: 'linear-gradient(135deg, #60A5FA, #34D399)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -72,17 +74,24 @@ const About = () => {
             О нашей компании
           </Typography>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={4}>
             {stats.map((stat, index) => (
               <Grid item xs={12} sm={4} key={index}>
                 <MotionPaper
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ 
-                    duration: 0.5,
-                    delay: index * 0.2,
-                    ease: "easeOut"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        duration: 0.4,
+                        delay: index * 0.1,
+                        ease: [0.25, 0.1, 0.25, 1],
+                      },
+                    },
                   }}
                   sx={{
                     height: isMobile ? 'auto' : '280px',
@@ -92,32 +101,20 @@ const About = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     position: 'relative',
-                    background: '#0A1929',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    backdropFilter: 'blur(10px)',
                     borderRadius: '24px',
                     overflow: 'hidden',
                     boxShadow: '0 0 30px rgba(0, 0, 0, 0.4)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
                     p: isMobile ? 3 : 4,
                     willChange: 'transform, opacity',
                   }}
                 >
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: '-20px',
-                      right: '-20px',
-                      width: '100px',
-                      height: '100px',
-                      background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                      opacity: 0.1,
-                      transform: 'rotate(45deg)',
-                    }}
-                  />
-                  
                   <MotionBox
-                    initial={{ rotate: 0, scale: 0.9 }}
+                    initial={{ scale: 0.9 }}
                     animate={{
-                      rotate: [0, -5, 0],
-                      scale: [0.9, 0.95, 0.9],
+                      scale: [0.9, 1, 0.9],
                     }}
                     transition={{
                       duration: 4,
@@ -129,7 +126,7 @@ const About = () => {
                       width: isMobile ? '80px' : '120px',
                       height: isMobile ? '80px' : '120px',
                       background: 'linear-gradient(135deg, #60A5FA, #34D399)',
-                      borderRadius: '12px',
+                      borderRadius: '16px',
                       m: isMobile ? '20px auto' : '30px auto',
                       display: 'flex',
                       alignItems: 'center',
@@ -138,7 +135,8 @@ const About = () => {
                       willChange: 'transform',
                     }}
                   >
-                    <Box
+                    <Typography
+                      variant="h3"
                       sx={{
                         color: '#fff',
                         fontSize: isMobile ? '2rem' : '2.5rem',
@@ -147,19 +145,21 @@ const About = () => {
                       }}
                     >
                       {stat.value}
-                    </Box>
+                    </Typography>
                   </MotionBox>
 
                   <Typography
+                    variant="h6"
                     sx={{
-                      fontSize: isMobile ? '1rem' : '1.25rem',
+                      fontSize: isMobile ? '1.1rem' : '1.25rem',
                       fontWeight: 600,
-                      color: '#94A3B8',
+                      color: '#fff',
                       textAlign: 'center',
                       textTransform: 'uppercase',
                       letterSpacing: '1px',
                       mt: 2,
                       px: 3,
+                      textShadow: '0 2px 4px rgba(0,0,0,0.3)',
                     }}
                   >
                     {stat.label}
