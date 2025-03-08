@@ -1,0 +1,13 @@
+{
+    "name": "carlifespb",
+    "version": "1.0.0",
+    "description": "CarLifeSPB",
+    "main": "index.js",
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    },
+    "scripts": {
+        "install-all": "npm install:server && npm install:client && npm install -g pm2 && npm install concurrently -g",
+        "start": "concurrently \"npm run start:server\" \"npm run start:client\""
+    }
+}
