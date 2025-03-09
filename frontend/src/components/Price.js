@@ -106,7 +106,7 @@ const Price = () => {
                       transition: 'all 0.3s ease',
                     }}
                   >
-                    {service.price} ₽
+                    {service.price}
                   </Typography>
 
                   <Typography
