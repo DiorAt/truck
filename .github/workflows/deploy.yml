@@ -1,0 +1,47 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install Frontend Dependencies
+        run: cd frontend && npm install
+
+      - name: Build Frontend
+        run: cd frontend && npm run build
+
+      - name: Install Backend Dependencies
+        run: cd backend && npm install
+
+      - name: Deploy to Server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          password: ${{ secrets.SERVER_PASS }}
+          source: "frontend/build/*,backend/*"
+          target: "/var/www/"
+          strip_components: 1
+
+      - name: Restart Backend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          password: ${{ secrets.SERVER_PASS }}
+          script: |
+            cd /var/www/backend
+            npm install
+            pm2 restart carlifespb-backend || pm2 start src/index.js --name "carlifespb-backend" 
